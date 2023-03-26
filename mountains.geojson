@@ -5,6 +5,17 @@
             "type": "Feature",
             "geometry": {
                 "type": "Point",
+                "coordinates": [55.32861886424211, -20.946270436844205]
+            },
+            "properties": {
+                "Name": "maison",
+                "Altitude": 3071
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
                 "coordinates": [55.502217, -21.131061]
             },
             "properties": {
