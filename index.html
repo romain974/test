@@ -1,60 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Montagnes de la Réunion en réalité augmentée</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/geojson/0.5.0/geojson.min.js"></script>
-
+<title>AR.js A-Frame Location-based</title>
+<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+<script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-threex-location-only.js'></script>
+<script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js'></script>
 </head>
 <body>
-    <h1>Les montagnes de l'île de La Réunion</h1>
-    <a-scene embedded arjs="debugUIEnabled: false;">
-        <a-assets>
-            <a-asset-item id="mountains" src="mountains.geojson"></a-asset-item>
-        </a-assets>
-        <a-marker preset="hiro">
-            <a-entity id="mountain-names"></a-entity>
-        </a-marker>
-        <a-entity camera></a-entity>
-    </a-scene>
-    <script>
-        AFRAME.registerComponent('mountain-label', {
-            schema: {
-                name: { type: 'string' },
-                altitude: { type: 'number' }
-            },
-            init: function () {
-                this.el.setAttribute('text', {
-                    value: this.data.name + ' (' + this.data.altitude + 'm)',
-                    align: 'center',
-                    color: 'white',
-                    width: '8'
-                });
-            }
-        });
-        fetch('./mountains.geojson')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                var features = data.features;
-                var mountainNames = document.querySelector('#mountain-names');
-                features.forEach(function (feature) {
-                    var properties = feature.properties;
-                    var coordinates = feature.geometry.coordinates;
-                    var name = properties.Name;
-                    var altitude = properties.Altitude;
-                    var label = document.createElement('a-entity');
-                    label.setAttribute('gps-entity-place', 'latitude: ' + coordinates[1] + '; longitude: ' + coordinates[0] + ';');
-                    label.setAttribute('mountain-label', { name: name, altitude: altitude });
-                    mountainNames.appendChild(label);
-                });
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
-    </script>
+<a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true'>
+    <a-camera gps-new-camera='gpsMinDistance: 5'></a-camera>
+    <a-entity material='color: red' geometry='primitive: box' gps-new-entity-place="latitude: -20.94634; longitude: 55.3286752" scale="10 10 10"></a-entity>
+</a-scene>
 </body>
 </html>
