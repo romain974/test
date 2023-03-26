@@ -1,0 +1,60 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [55.502217, -21.131061]
+            },
+            "properties": {
+                "Name": "Piton des Neiges",
+                "Altitude": 3071
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [55.470190, -21.237119]
+            },
+            "properties": {
+                "Name": "Piton de la Fournaise",
+                "Altitude": 2632
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [55.480874, -21.121311]
+            },
+            "properties": {
+                "Name": "Dimitile",
+                "Altitude": 1862
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [55.512170, -21.217370]
+            },
+            "properties": {
+                "Name": "Grand Bénare",
+                "Altitude": 2898
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [55.522650, -21.163949]
+            },
+            "properties": {
+                "Name": "Roche Écrite",
+                "Altitude": 2276
+            }
+        }
+    ]
+}
