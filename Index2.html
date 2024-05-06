@@ -50,20 +50,23 @@
     // Obtenir la référence à la balise <video> de la caméra AR.js
     var cameraFeed = document.querySelector('#arjs-loader > video');
 
-    // Définir la texture de l'environnement de la scène Cesium pour qu'elle corresponde à la caméra
-    viewer.scene.skyBox.sources = new Cesium.SkyBox({
-      sources: {
-        positiveX: cameraFeed,
-        negativeX: cameraFeed,
-        positiveY: cameraFeed,
-        negativeY: cameraFeed,
-        positiveZ: cameraFeed,
-        negativeZ: cameraFeed
-      }
-    });
+    // Écouter l'événement loadeddata de la balise vidéo
+    cameraFeed.addEventListener('loadeddata', function() {
+      // Définir la texture de l'environnement de la scène Cesium pour qu'elle corresponde à la caméra
+      viewer.scene.skyBox.sources = new Cesium.SkyBox({
+        sources: {
+          positiveX: cameraFeed,
+          negativeX: cameraFeed,
+          positiveY: cameraFeed,
+          negativeY: cameraFeed,
+          positiveZ: cameraFeed,
+          negativeZ: cameraFeed
+        }
+      });
 
-    viewer.scene.skyBox.show = true;
-    viewer.scene.globe.show = false;
+      viewer.scene.skyBox.show = true;
+      viewer.scene.globe.show = false;
+    });
 
     var arCamera = document.querySelector('a-camera');
     var cesiumCamera = viewer.camera;
