@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-arjs@5.0.0/build/aframe-arjs.min.js"></script>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.80/Build/Cesium/Cesium.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene embedded arjs>
+    <a-camera></a-camera>
+
+    <a-entity id="cesium-entity" position="0 0 -1">
+      <a-entity id="cesium-container"></a-entity>
+    </a-entity>
+
+    <a-entity id="camera-texture" material="src: #camera-feed;"></a-entity>
+    <a-entity camera="user" wasd-controls></a-entity>
+  </a-scene>
+
+  <script>
+    var viewer = new Cesium.Viewer('cesium-container', {
+      terrainProvider: Cesium.createWorldTerrain(),
+      baseLayerPicker: false,
+      geocoder: false,
+      timeline: false,
+      navigationHelpButton: false,
+      sceneModePicker: false,
+      selectionIndicator: false,
+      infoBox: false,
+      shouldAnimate: true
+    });
+
+    // Ajouter les noms des montagnes en utilisant les entités CesiumJS
+    viewer.entities.add({
+      name: 'Mont Blanc',
+      position: Cesium.Cartesian3.fromDegrees(6.8681, 45.8015, 4808.7),
+      label: {
+        text: 'Mont Blanc',
+        font: '24px sans-serif',
+        fillColor: Cesium.Color.WHITE,
+        pixelOffset: new Cesium.Cartesian2(0, -20),
+        horizontalOrigin: Cesium.HorizontalOrigin.CENTER
+      }
+    });
+
+    // ... Ajoutez d'autres montagnes de la même manière
+
+    // Obtenir la référence à la balise <video> de la caméra AR.js
+    var cameraFeed = document.querySelector('#arjs-loader > video');
+
+    // Définir la texture de l'environnement de la scène Cesium pour qu'elle corresponde à la caméra
+    viewer.scene.skyBox.sources = new Cesium.SkyBox({
+      sources: {
+        positiveX: cameraFeed,
+        negativeX: cameraFeed,
+        positiveY: cameraFeed,
+        negativeY: cameraFeed,
+        positiveZ: cameraFeed,
+        negativeZ: cameraFeed
+      }
+    });
+
+    viewer.scene.skyBox.show = true;
+    viewer.scene.globe.show = false;
+
+    var arCamera = document.querySelector('a-camera');
+    var cesiumCamera = viewer.camera;
+
+    arCamera.addEventListener('camera-changed', function () {
+      var position = arCamera.object3D.position;
+      var orientation = arCamera.object3D.quaternion;
+
+      // Convertir la position et l'orientation de THREE.js à Cesium
+      var cesiumPosition = Cesium.Cartesian3.fromArray(position.toArray());
+      var cesiumOrientation = Cesium.Transforms.quaternionToRotation(Cesium.Cartesian3.fromArray(orientation.toArray()));
+
+      // Mettre à jour la position et l'orientation de la caméra Cesium
+      cesiumCamera.position = cesiumPosition;
+      cesiumCamera.orientation = cesiumOrientation;
+    });
+  </script>
+</body>
+</html>
