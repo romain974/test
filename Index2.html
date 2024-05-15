@@ -13,89 +13,56 @@
         padding: 0;
         overflow: hidden;
       }
-      #video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
     </style>
   </head>
   <body>
     <div id="cesiumContainer"></div>
-    <video id="video" autoplay playsinline muted></video>
     <script>
-      // Créer une instance de Cesium Viewer
-      const viewer = new Cesium.Viewer("cesiumContainer", {
-        baseLayerPicker: false,
-        geocoder: false,
-        homeButton: false,
-        infoBox: false,
-        sceneModePicker: false,
-        timeline: false,
-        navigationHelpButton: false,
-        fullscreenButton: false,
-        scene3DOnly: true,
-        shouldAnimate: true,
-        terrainProvider: Cesium.createWorldTerrain(),
-        contextOptions: {
-          webgl: {
-            alpha: true,
-          },
-        },
-      });
+Cesium.Ion.defaultAccessToken = 'VOTRE_ACCESS_TOKEN';
 
-      // Définir la transparence du globe
-      viewer.scene.globe.enableLighting = true;
-      viewer.scene.globe.transparent = true;
+const viewer = new Cesium.Viewer('cesiumContainer', {
+  shouldAnimate: true,
+});
 
-      // Ajouter un marqueur aux coordonnées spécifiées
-      const entity = viewer.entities.add({
-        position: Cesium.Cartesian3.fromDegrees(55.343199, -20.926952),
-        point: {
-          color: Cesium.Color.RED,
-          pixelSize: 10,
-        },
-      });
+navigator.geolocation.getCurrentPosition(
+  (position) => {
+    const longitude = Cesium.Math.toDegrees(position.coords.longitude);
+    const latitude = Cesium.Math.toDegrees(position.coords.latitude);
+    const altitude = position.coords.altitude || 0;
 
-      // Accéder à la caméra de l'appareil
-      navigator.mediaDevices
-        .getUserMedia({ video: { facingMode: "environment" } })
-        .then((stream) => {
-          // Attacher le flux vidéo à l'élément vidéo
-          const video = document.getElementById("video");
-          video.srcObject = stream;
-          video.play();
+    viewer.camera.setView({
+      destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude + 100),
+      orientation: {
+        heading: Cesium.Math.toRadians(0),
+        pitch: Cesium.Math.toRadians(-90),
+        roll: Cesium.Math.toRadians(0),
+      },
+    });
+  },
+  (error) => {
+    console.error('Error getting user position:', error);
+  },
+  {
+    enableHighAccuracy: true,
+    maximumAge: 10000,
+    timeout: 20000,
+  }
+);
 
-          // Mettre à jour la position de la caméra en fonction de la vidéo
-          function updateCamera() {
-            const position = Cesium.Cartesian3.fromDegrees(
-              video.videoWidth / 2,
-              video.videoHeight / 2,
-              0
-            );
-            const orientation = Cesium.Transforms.headingPitchRollQuaternion(
-              position,
-              new Cesium.HeadingPitchRoll(
-                Cesium.Math.toRadians(90),
-                Cesium.Math.toRadians(90),
-                0
-              )
-            );
-            viewer.camera.setView({
-              destination: position,
-              orientation: orientation,
-            });
-          }
+window.addEventListener('deviceorientation', (event) => {
+  const alpha = event.alpha ? Cesium.Math.toRadians(event.alpha) : 0;
+  const beta = event.beta ? Cesium.Math.toRadians(event.beta) : 0;
+  const gamma = event.gamma ? Cesium.Math.toRadians(event.gamma) : 0;
 
-          // Mettre à jour la position de la caméra toutes les 100 ms
-          setInterval(updateCamera, 100);
-        })
-        .catch((error) => {
-          console.error("Erreur d'accès à la caméra :", error);
-        });
+  viewer.camera.setView({
+    orientation: {
+      heading: alpha,
+      pitch: -beta,
+      roll: gamma,
+    },
+  });
+});
+
     </script>
   </body>
 </html>
