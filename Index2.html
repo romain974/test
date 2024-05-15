@@ -31,7 +31,7 @@ navigator.geolocation.getCurrentPosition(
     const altitude = position.coords.altitude || 0;
 
     viewer.camera.setView({
-      destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude + 100),
+      destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude + 2),
       orientation: {
         heading: Cesium.Math.toRadians(0),
         pitch: Cesium.Math.toRadians(-90),
@@ -57,8 +57,8 @@ window.addEventListener('deviceorientation', (event) => {
   viewer.camera.setView({
     orientation: {
       heading: alpha,
-      pitch: Cesium.Math.toRadians(90)-beta,
-      roll: gamma,
+      pitch: -beta,
+      roll: -gamma,
     },
   });
 });
