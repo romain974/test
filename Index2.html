@@ -38,6 +38,18 @@ navigator.geolocation.getCurrentPosition(
         roll: Cesium.Math.toRadians(0),
       },
     });
+
+	  viewer.scene.skyBox.destroy();
+    viewer.scene.skyBox = undefined;
+    viewer.scene.sun.destroy();
+    viewer.scene.sun = undefined;
+	viewer.scene.moon.destroy();
+    viewer.scene.moon = undefined;
+    viewer.scene.skyAtmosphere.destroy();
+	viewer.scene.skyAtmosphere = undefined; 
+    viewer._cesiumWidget._creditContainer.parentNode.removeChild(
+    viewer._cesiumWidget._creditContainer);
+	viewer.scene.backgroundColor = Cesium.Color.TRANSPARENT;
   },
   (error) => {
     console.error('Error getting user position:', error);
