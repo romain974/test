@@ -13,9 +13,21 @@
         padding: 0;
         overflow: hidden;
       }
+	     #video{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -100;
+      transform: translateX(-50%) translateY(-50%);
+      }
     </style>
   </head>
   <body>
+    <video id="video" muted="" autoplay="" loop="" ></video> 
     <div id="cesiumContainer"></div>
     <script>
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMmViMTNmZC1lNThjLTQyNmUtYThiZC03OWZhYTdiZmExMWEiLCJpZCI6MzkyMjMsImlhdCI6MTYwNzM1MjY3OH0._pP38L0hUzZEf9CJinPlRTL_dJPHwMwkwFa2qzLTZSs';
@@ -50,6 +62,29 @@ navigator.geolocation.getCurrentPosition(
     viewer._cesiumWidget._creditContainer.parentNode.removeChild(
     viewer._cesiumWidget._creditContainer);
 	viewer.scene.backgroundColor = Cesium.Color.TRANSPARENT;
+
+	  (function()
+	{
+	    
+	   var video= document.getElementById('video'),
+	    vendorurl=window.URL || window.webkitURL;
+	
+	   navigator.getMedia= navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+	    navigator.getMedia(
+		{
+		  video:true,
+		  video:{facingMode: { exact: "environment" }},
+		  audio:false
+		
+		}, function(stream){
+		    video.srcObject = stream; video.play();
+	 
+		},function(error){
+	
+		});
+	    
+	}) ();
+	  
   },
   (error) => {
     console.error('Error getting user position:', error);
