@@ -48,19 +48,50 @@ navigator.geolocation.getCurrentPosition(
     timeout: 20000,
   }
 );
+function updateCameraPositionAndOrientation(alpha, beta, gamma) {
+  const cameraPosition = viewer.camera.positionCartographic;
+  const cameraHeight = cameraPosition.height;
+  const distanceToEllipsoid = cameraHeight + Cesium.Ellipsoid.WGS84.getRadius(cameraPosition);
 
+  // Ajustement des translations en fonction des axes du téléphone
+  const betaTranslation = (beta / 90) * distanceToEllipsoid;
+  const gammaTranslation = (gamma / 45) * distanceToEllipsoid;
+
+  const newPosition = Cesium.Cartesian3.add(
+    viewer.camera.position,
+    Cesium.Cartesian3.fromDegrees(gammaTranslation, -betaTranslation, 0),
+    new Cesium.Cartesian3()
+  );
+
+  // Ajustement de la rotation en fonction de l'axe Z du téléphone
+  const rotationQuaternion = Cesium.Transforms.headingPitchRollQuaternion(
+    Cesium.Math.toRadians(alpha),
+    viewer.camera.pitch,
+    viewer.camera.roll
+  );
+  const newDirection = Cesium.Matrix3.fromQuaternion(rotationQuaternion, new Cesium.Matrix3()).multiplyByVector(
+    viewer.camera.direction,
+    new Cesium.Cartesian3()
+  );
+  const newUp = Cesium.Matrix3.fromQuaternion(rotationQuaternion, new Cesium.Matrix3()).multiplyByVector(
+    viewer.camera.up,
+    new Cesium.Cartesian3()
+  );
+
+  viewer.camera.setView({
+    destination: newPosition,
+    orientation: {
+      direction: newDirection,
+      up: newUp,
+    },
+  });
+}
 window.addEventListener('deviceorientation', (event) => {
   const alpha = event.alpha ? Cesium.Math.toRadians(event.alpha) : 0;
   const beta = event.beta ? Cesium.Math.toRadians(event.beta) : 0;
   const gamma = event.gamma ? Cesium.Math.toRadians(event.gamma) : 0;
 
-  viewer.camera.setView({
-    orientation: {
-      heading: alpha,
-      pitch: -beta,
-      roll: -gamma,
-    },
-  });
+  updateCameraPositionAndOrientation(alpha, beta, gamma);;
 });
 
     </script>
