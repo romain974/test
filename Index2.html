@@ -38,6 +38,7 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
 	terrain: Cesium.Terrain.fromWorldTerrain({
     requestWaterMask: true,
   }),
+	baseLayer: null,
   timeline:false,
   animation:false,
   fullscreenButton:false,
@@ -52,7 +53,7 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
         }
     }
 });
-     viewer.scene.globe.show=false;
+
 	    //viewer.terrainProvider= Cesium.CesiumTerrainProvider.fromUrl("https://wwww.reunion3d.re/terrain3D",{requestVertexNormals:true,requestWaterMask: true})
 	 const transparence = new Cesium.GlobeTranslucency();
 	    transparence.enabled = true;
