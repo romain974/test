@@ -79,6 +79,117 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
     viewer._cesiumWidget._creditContainer.parentNode.removeChild(
     viewer._cesiumWidget._creditContainer);
 	viewer.scene.backgroundColor = Cesium.Color.TRANSPARENT;
+
+
+const geojson = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "coordinates": [
+          [
+            55.341384323712134,
+            -20.92522445437085
+          ],
+          [
+            55.3453838263672,
+            -20.92532407366494
+          ],
+          [
+            55.34493943718343,
+            -20.92761529915242
+          ],
+          [
+            55.349383329023624,
+            -20.927930754990072
+          ],
+          [
+            55.3564049971458,
+            -20.94261526443529
+          ],
+          [
+            55.35403900027447,
+            -20.947604818479917
+          ],
+          [
+            55.36449517999691,
+            -20.95031336388007
+          ],
+          [
+            55.36480046991579,
+            -20.94332806805339
+          ],
+          [
+            55.36525840479493,
+            -20.933633648101207
+          ],
+          [
+            55.37197478301002,
+            -20.93712656291173
+          ],
+          [
+            55.3767067767528,
+            -20.93634244627043
+          ],
+          [
+            55.37472239228046,
+            -20.93113865907833
+          ],
+          [
+            55.37304329772701,
+            -20.923296994484687
+          ],
+          [
+            55.3815914154558,
+            -20.938552219014014
+          ],
+          [
+            55.37739367907079,
+            -20.94553773769792
+          ],
+          [
+            55.37128788069211,
+            -20.95302186025674
+          ],
+          [
+            55.365105759834734,
+            -20.95850997890099
+          ],
+          [
+            55.336142148033446,
+            -20.957499655031583
+          ],
+          [
+            55.329273124858105,
+            -20.954648690180036
+          ],
+          [
+            55.32461745367735,
+            -20.950443417228726
+          ],
+          [
+            55.32194616688699,
+            -20.943529407583824
+          ]
+        ],
+        "type": "LineString"
+      }
+    }
+  ]
+}
+	    // Convertir le GeoJSON en entité Cesium
+viewer.dataSources.add(Cesium.GeoJsonDataSource.load(geojson, {
+    stroke: Cesium.Color.ROYALBLUE,
+    fill: Cesium.Color.ROYALBLUE.withAlpha(0.5),
+    strokeWidth: 5,
+	clampToGround : true
+}))
+
+
+
+	    
 	    var videoElement = document.getElementById("video");
 
 	  (function()
