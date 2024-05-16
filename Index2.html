@@ -60,6 +60,7 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
     }),
 		  ),
 		);
+	viewer.imageryLayers .removeAll(false);
 	var contoursMaterial = Cesium.Material.fromType("ElevationContour");
           contoursMaterial.uniforms.spacing = 100;
           contoursMaterial.uniforms.color = Cesium.Color.BLACK;
