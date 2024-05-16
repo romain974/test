@@ -47,6 +47,15 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
         }
     }
 });
+	    viewer.imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
+              url : 'https://data.geopf.fr/wmts?',
+              layer : 'HR.ORTHOIMAGERY.ORTHOPHOTOS',
+              style : 'normal',
+              format : 'image/jpeg',
+              tileMatrixSetID : 'PM',
+          });
+	    viewer.terrainProvider= Cesium.CesiumTerrainProvider.fromUrl("/terrain3D",{requestVertexNormals:true,requestWaterMask: true})
+          viewer.scene.globe.depthTestAgainstTerrain = true;
 	    	  viewer.scene.skyBox.destroy();
     viewer.scene.skyBox = undefined;
     viewer.scene.sun.destroy();
