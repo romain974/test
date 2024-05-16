@@ -63,7 +63,7 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
 	    viewer.imageryLayers.addImageryProvider(imageryProvider);
 	    //viewer.terrainProvider= Cesium.CesiumTerrainProvider.fromUrl("https://wwww.reunion3d.re/terrain3D",{requestVertexNormals:true,requestWaterMask: true})
 
-	    viewer.globe.translucency =  new Cesium.GlobeTranslucency({
+	    viewer.scene.globe.translucency =  new Cesium.GlobeTranslucency({
 		    enabled : true,
 		    backFaceAlpha: 0.5,
 		    frontFAceAlpha: 0.5
@@ -110,6 +110,10 @@ navigator.geolocation.getCurrentPosition(
     const longitude = position.coords.longitude;
     const latitude = position.coords.latitude;
     const altitude = position.coords.altitude || 0;
+	  // Convertir la position en coordonnées Cartesian3
+    var cartographic = Cesium.Cartographic.fromDegrees(longitude, latitude);
+    var positionCartesian = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, cartographic.height);
+	  var terrainHeight = Cesium.sampleTerrain(viewer.terrainProvider, positionCartesian);
 
     viewer.camera.setView({
       destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude + 2),
