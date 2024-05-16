@@ -62,6 +62,13 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
           });
 	    viewer.imageryLayers.addImageryProvider(imageryProvider);
 	    //viewer.terrainProvider= Cesium.CesiumTerrainProvider.fromUrl("https://wwww.reunion3d.re/terrain3D",{requestVertexNormals:true,requestWaterMask: true})
+
+	    viewer.globe.translucency =  new Cesium.GlobeTranslucency({
+		    enabled : true,
+		    backFaceAlpha: 0.5,
+		    frontFAceAlpha: 0.5
+	    }
+		    )
           viewer.scene.globe.depthTestAgainstTerrain = true;
 	    	  viewer.scene.skyBox.destroy();
     viewer.scene.skyBox = undefined;
