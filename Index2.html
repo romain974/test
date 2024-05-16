@@ -13,17 +13,19 @@
         padding: 0;
         overflow: hidden;
       }
-	     #video{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      z-index: -100;
-      transform: translateX(-50%) translateY(-50%);
-      }
+		  #cesiumContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+}
     </style>
   </head>
   <body>
@@ -56,6 +58,7 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
               style : 'normal',
               format : 'image/jpeg',
               tileMatrixSetID : 'PM',
+		    alpha: 0.2
           });
 	    viewer.imageryLayers.addImageryProvider(imageryProvider);
 	    //viewer.terrainProvider= Cesium.CesiumTerrainProvider.fromUrl("https://wwww.reunion3d.re/terrain3D",{requestVertexNormals:true,requestWaterMask: true})
