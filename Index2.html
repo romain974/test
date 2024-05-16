@@ -55,7 +55,7 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
 		  ),
 		);
 	viewer.scene.imageryLayers.removeAll();
-	   viewer.scene.globe.baseColor = new Cesium.Color(1, 1, 1, 0.2);
+	   viewer.scene.globe.baseColor = new Cesium.Color(1, 1, 1, 0.9);
 	/*var contoursMaterial = Cesium.Material.fromType("ElevationContour");
           contoursMaterial.uniforms.spacing = 100;
           contoursMaterial.uniforms.color = Cesium.Color.BLACK;
@@ -177,7 +177,7 @@ const geojson = {
 viewer.dataSources.add(Cesium.GeoJsonDataSource.load(geojson, {
     stroke: Cesium.Color.ROYALBLUE,
     fill: Cesium.Color.ROYALBLUE.withAlpha(0.5),
-    strokeWidth: 50,
+    strokeWidth: 10,
 	clampToGround : true
 }))
 
