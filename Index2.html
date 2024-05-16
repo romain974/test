@@ -13,12 +13,6 @@
         padding: 0;
         overflow: hidden;
       }
-		  #cesiumContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-			  opacity: 1;
-}
 #video {
   position: absolute;
   top: 50%;
@@ -60,8 +54,8 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
     }),
 		  ),
 		);
-	viewer.scene.imageryLayers.removeAll();
-	    viewer.scene.globe.baseColor = Cesium.Color.TRANSPARENT;
+	//viewer.scene.imageryLayers.removeAll();
+	   // viewer.scene.globe.baseColor = Cesium.Color.TRANSPARENT;
 	/*var contoursMaterial = Cesium.Material.fromType("ElevationContour");
           contoursMaterial.uniforms.spacing = 100;
           contoursMaterial.uniforms.color = Cesium.Color.BLACK;
