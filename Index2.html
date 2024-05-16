@@ -33,6 +33,9 @@
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMmViMTNmZC1lNThjLTQyNmUtYThiZC03OWZhYTdiZmExMWEiLCJpZCI6MzkyMjMsImlhdCI6MTYwNzM1MjY3OH0._pP38L0hUzZEf9CJinPlRTL_dJPHwMwkwFa2qzLTZSs';
 
 const viewer = new Cesium.Viewer('cesiumContainer', {
+	terrain: Cesium.Terrain.fromWorldTerrain({
+    requestWaterMask: true,
+  }),
   timeline:false,
   animation:false,
   fullscreenButton:false,
@@ -47,14 +50,15 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
         }
     }
 });
-	    viewer.imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
+	    const imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
               url : 'https://data.geopf.fr/wmts?',
               layer : 'HR.ORTHOIMAGERY.ORTHOPHOTOS',
               style : 'normal',
               format : 'image/jpeg',
               tileMatrixSetID : 'PM',
           });
-	    viewer.terrainProvider= Cesium.CesiumTerrainProvider.fromUrl("https://wwww.reunion3d.re/terrain3D",{requestVertexNormals:true,requestWaterMask: true})
+	    viewer.imageryLayers.addImageryProvider(imageryProvider);
+	    //viewer.terrainProvider= Cesium.CesiumTerrainProvider.fromUrl("https://wwww.reunion3d.re/terrain3D",{requestVertexNormals:true,requestWaterMask: true})
           viewer.scene.globe.depthTestAgainstTerrain = true;
 	    	  viewer.scene.skyBox.destroy();
     viewer.scene.skyBox = undefined;
