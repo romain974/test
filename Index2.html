@@ -54,7 +54,7 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
               format : 'image/jpeg',
               tileMatrixSetID : 'PM',
           });
-	    viewer.terrainProvider= Cesium.CesiumTerrainProvider.fromUrl("/terrain3D",{requestVertexNormals:true,requestWaterMask: true})
+	    viewer.terrainProvider= Cesium.CesiumTerrainProvider.fromUrl("https://wwww.reunion3d.re/terrain3D",{requestVertexNormals:true,requestWaterMask: true})
           viewer.scene.globe.depthTestAgainstTerrain = true;
 	    	  viewer.scene.skyBox.destroy();
     viewer.scene.skyBox = undefined;
