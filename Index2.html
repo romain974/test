@@ -60,12 +60,12 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
     }),
 		  ),
 		);
-	viewer.imageryLayers .removeAll(false);
-	var contoursMaterial = Cesium.Material.fromType("ElevationContour");
+	viewer.imageryLayers.removeAll(false);
+	/*var contoursMaterial = Cesium.Material.fromType("ElevationContour");
           contoursMaterial.uniforms.spacing = 100;
           contoursMaterial.uniforms.color = Cesium.Color.BLACK;
           contoursMaterial.uniforms.width = 2;
-	    viewer.scene.globe.material = contoursMaterial;
+	    viewer.scene.globe.material = contoursMaterial;*/
           viewer.scene.globe.depthTestAgainstTerrain = true;
 	    	  viewer.scene.skyBox.destroy();
     viewer.scene.skyBox = undefined;
