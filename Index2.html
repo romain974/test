@@ -196,7 +196,7 @@ viewer.dataSources.add(Cesium.GeoJsonDataSource.load(geojson, {
 	    navigator.getMedia(
 		{
 		  video:true,
-		  video:{facingMode: { exact: "environment" }},
+		  video:{facingMode: { exact: "environment" },  width: 1280, height: 720 },
 		  audio:false
 		
 		}, function(stream){
